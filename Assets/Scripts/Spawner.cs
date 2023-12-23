@@ -10,7 +10,16 @@ public class Spawner : MonoBehaviour
     private List<BoidManager> _boids;
 
     [SerializeField]
-    float NoClumpingRadius, LocalAreaRadius, Speed, SteeringSpeed, NoClumpingArea;
+    float NoClumpingRadius, LocalAreaRadius, Speed, SteeringSpeed;
+
+    [SerializeField]
+    float boidSimulationAreaX = 14f;
+
+    [SerializeField]
+    float boidSimulationAreaY = 8f;
+
+    [SerializeField]
+    float boidSimulationAreaZ = 23f;
 
     private void Start()
     {
@@ -27,6 +36,39 @@ public class Spawner : MonoBehaviour
         foreach (BoidManager boid in _boids)
         {
             boid.SimulateMovement(_boids, Time.deltaTime);
+
+
+            // Making sure the boids stay within the simulation area
+            var boidPos = boid.transform.position;
+
+            if (boidPos.x > boidSimulationAreaX)
+            {
+                boidPos.x -= boidSimulationAreaX * 2;
+            } else if (boidPos.x < -boidSimulationAreaX)
+            {
+                boidPos.x += boidSimulationAreaX * 2;
+            }
+
+            if (boidPos.y > boidSimulationAreaY)
+            {
+                boidPos.y -= boidSimulationAreaY * 2;
+            }
+            else if (boidPos.y < -boidSimulationAreaY)
+            {
+                boidPos.y += boidSimulationAreaY * 2;
+            }
+
+            if (boidPos.z > boidSimulationAreaZ)
+            {
+                boidPos.z -= boidSimulationAreaZ * 2;
+            }
+            else if (boidPos.z < -boidSimulationAreaZ)
+            {
+                boidPos.z += boidSimulationAreaZ * 2;
+            }
+
+            boid.transform.position = boidPos;
+
         }
     }
 
@@ -40,7 +82,7 @@ public class Spawner : MonoBehaviour
         boidManager.Speed = Speed;
         boidManager.SteeringSpeed = SteeringSpeed;
         boidManager.LocalAreaRadius = LocalAreaRadius;
-        boidManager.NoClumpingRadius = NoClumpingArea;
+        boidManager.NoClumpingRadius = NoClumpingRadius;
         _boids.Add(boidManager);
     }
 }
