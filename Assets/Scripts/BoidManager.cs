@@ -107,11 +107,27 @@ public class BoidManager : MonoBehaviour
             steering += (leaderBoid.transform.position - transform.position).normalized;
         }
 
+        // Just testing having the boids go to a target area
+        /*
+        var targetPoint = Vector3.zero;
+        if (Vector3.Distance(transform.position, targetPoint) < LocalAreaRadius)
+        {
+            steering += (targetPoint - transform.position).normalized;
+        }
+        */
+
+        // Because this is the most important rule, so we apply this in the end so it takes priority above all else and doesn't get overwritten
+        // We'll be using raycasts for this based on "Dawn Studio's" implementation, but this may change if I find a more optimal approach
+        RaycastHit hitInfo;
+        if (Physics.Raycast(transform.position, transform.forward, out hitInfo, LocalAreaRadius, LayerMask.GetMask("BoidObstacle")))
+            steering = ((hitInfo.point + hitInfo.normal) - transform.position).normalized;
+
         // applying steering
         if (steering != Vector3.zero)
         {
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(steering), SteeringSpeed * time);
         }
+
         transform.position += transform.TransformDirection(new Vector3(0, 0, Speed)) * time;
     }
 }
