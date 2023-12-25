@@ -10,7 +10,7 @@ public class BoidManager : MonoBehaviour
     public float NoClumpingRadius { get; set; } // NoClumpingRadius controls the density of our swarms, the smaller the value, the more dense the swam can be
     public float LocalAreaRadius { get; set; } // LocalAreaRadius controls the average swarm size, A bigger LocalAreaRadius will increase the average swarm size, because each Boid has a bigger range of influence
     public float Speed { get; set; }
-    public float SteeringSpeed { get; set; }
+    public float TurnSpeed { get; set; }
 
     public void SimulateMovement(List<BoidManager> other, float time)
     {
@@ -125,7 +125,7 @@ public class BoidManager : MonoBehaviour
         // applying steering
         if (steering != Vector3.zero)
         {
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(steering), SteeringSpeed * time);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(steering), TurnSpeed * time);
         }
 
         transform.position += transform.TransformDirection(new Vector3(0, 0, Speed)) * time;
