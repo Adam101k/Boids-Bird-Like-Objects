@@ -21,7 +21,7 @@ A more simplified version of these rules would be: </br>
 
 # The Boids at work
 <video width="320" height="240" controls>
-  <source src="Images/2023-12-22 19-14-04.mp4" type="video/mp4">
+  <source src="Images/BoidExample.mp4" type="video/mp4">
 Your browser does not support the video tag.
 </video>
 
