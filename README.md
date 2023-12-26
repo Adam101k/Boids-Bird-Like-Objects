@@ -20,10 +20,10 @@ A more simplified version of these rules would be: </br>
 3. Cohesion
 
 # The Boids at work
-<video width="320" height="240" controls>
-  <source src="Images/BoidExample.mp4" type="video/mp4">
-Your browser does not support the video tag.
-</video>
+<div align="center">
+ <a> <img src="BoidExample.gif"></a>
+</div>
+
 
 # Additional Resources
  If you wish to learn more info about what a "Boid" is, I recommend checking out the following resources: </br>
