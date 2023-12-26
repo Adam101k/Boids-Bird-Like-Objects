@@ -1,7 +1,7 @@
 # Introduction
 This will be my attempt to recreate Boids using my methods and those found online. I was given a general date of 3-5 days to work on this project. Below, I'll review some of the research that went into this and some methodologies used for these Boids. This project is free for anyone to use; however, this is not a fully prepared asset and needs some features of Boids that I will discuss in more detail below.
 <div align="center">
-<img src="Images/BoidIntro" width="500">
+<img src="Images/BoidIntro.png" width="750">
 </div>
 
 # What are Boids?
@@ -18,6 +18,12 @@ A more simplified version of these rules would be: </br>
 1. Separation
 2. Alignment
 3. Cohesion
+
+# The Boids at work
+<video width="320" height="240" controls>
+  <source src="Images/2023-12-22 19-14-04.mp4" type="video/mp4">
+Your browser does not support the video tag.
+</video>
 
 # Additional Resources
  If you wish to learn more info about what a "Boid" is, I recommend checking out the following resources: </br>
