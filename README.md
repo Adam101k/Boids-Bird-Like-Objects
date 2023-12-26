@@ -21,7 +21,7 @@ A more simplified version of these rules would be: </br>
 
 # The Boids at work
 <div align="center">
- <a> <img src="BoidExample.gif"></a>
+ <a> <img src="Images/BoidExample.gif"></a>
 </div>
 
 
