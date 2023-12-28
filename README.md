@@ -39,7 +39,7 @@ An Early clip of a hundred Boids moving with no Obstacles obscuring their path
  If you wish to learn more info about what a "Boid" is, I recommend checking out the following resources: </br>
  
 Sebastian Lague | https://www.youtube.com/watch?v=bqtqltqcQhw </br>
-Dawn Studio | https://dawn-studio.de/tutorials/boids/
+Dawn Studio | https://dawn-studio.de/tutorials/boids/ </br>
 Original Boids Research Paper | https://www.cs.toronto.edu/~dt/siggraph97-course/cwr87/ </br>
 
  They are written and updated by Adam Kaci.
