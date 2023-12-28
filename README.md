@@ -31,7 +31,7 @@ After we apply all of the previously mentioned rules, we get a semi-functional b
 # The Boids at work
 An Early clip of a hundred Boids moving with no Obstacles obscuring their path
 <div align="center">
- <a> <img src="Images/BoidExample.gif"></a>
+ <a> <img src="Images/BoidExample.gif" width="750"></a>
 </div>
 
 
