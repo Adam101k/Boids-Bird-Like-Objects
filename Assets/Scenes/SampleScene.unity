@@ -1751,7 +1751,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   boidPrefab: {fileID: 4875529954709837245, guid: 643ee509a57c9664687240d05f3ccbb3,
     type: 3}
-  spawnBoids: 100
+  spawnBoids: 250
   NoClumpingRadius: 5
   LocalAreaRadius: 10
   Speed: 8
