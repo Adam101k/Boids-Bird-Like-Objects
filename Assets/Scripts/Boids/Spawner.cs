@@ -10,16 +10,19 @@ public class Spawner : MonoBehaviour
     private List<BoidManager> _boids;
 
     [SerializeField]
-    float NoClumpingRadius, LocalAreaRadius, Speed, TurnSpeed, ObstacleAvoidanceRadius;
+    float NoClumpingRadius, LocalAreaRadius, Speed, TurnSpeed, ObstacleAvoidanceRadius, ViewAngle;
 
     [SerializeField]
-    float boidSimulationAreaX = 14f;
+    int RaysPerLayer, NumberOfLayers;
 
     [SerializeField]
-    float boidSimulationAreaY = 8f;
+    float boidAreaX = 14f;
 
     [SerializeField]
-    float boidSimulationAreaZ = 23f;
+    float boidAreaY = 8f;
+
+    [SerializeField]
+    float boidAreaZ = 23f;
 
     private void Start()
     {
@@ -41,30 +44,30 @@ public class Spawner : MonoBehaviour
             // Making sure the boids stay within the simulation area
             var boidPos = boid.transform.position;
 
-            if (boidPos.x > boidSimulationAreaX)
+            if (boidPos.x > boidAreaX)
             {
-                boidPos.x -= boidSimulationAreaX * 2;
-            } else if (boidPos.x < -boidSimulationAreaX)
+                boidPos.x -= boidAreaX * 2;
+            } else if (boidPos.x < -boidAreaX)
             {
-                boidPos.x += boidSimulationAreaX * 2;
+                boidPos.x += boidAreaX * 2;
             }
 
-            if (boidPos.y > boidSimulationAreaY)
+            if (boidPos.y > boidAreaY)
             {
-                boidPos.y -= boidSimulationAreaY * 2;
+                boidPos.y -= boidAreaY * 2;
             }
-            else if (boidPos.y < -boidSimulationAreaY)
+            else if (boidPos.y < -boidAreaY)
             {
-                boidPos.y += boidSimulationAreaY * 2;
+                boidPos.y += boidAreaY * 2;
             }
 
-            if (boidPos.z > boidSimulationAreaZ)
+            if (boidPos.z > boidAreaZ)
             {
-                boidPos.z -= boidSimulationAreaZ * 2;
+                boidPos.z -= boidAreaZ * 2;
             }
-            else if (boidPos.z < -boidSimulationAreaZ)
+            else if (boidPos.z < -boidAreaZ)
             {
-                boidPos.z += boidSimulationAreaZ * 2;
+                boidPos.z += boidAreaZ * 2;
             }
 
             boid.transform.position = boidPos;
@@ -84,6 +87,9 @@ public class Spawner : MonoBehaviour
         boidManager.LocalAreaRadius = LocalAreaRadius;
         boidManager.NoClumpingRadius = NoClumpingRadius;
         boidManager.ObstacleAvoidanceRadius = ObstacleAvoidanceRadius;
+        boidManager.ViewAngle = ViewAngle;
+        boidManager.RaysPerLayer = RaysPerLayer;
+        boidManager.NumberOfLayers = NumberOfLayers;
         _boids.Add(boidManager);
     }
 }

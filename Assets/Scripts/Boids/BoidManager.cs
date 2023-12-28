@@ -13,10 +13,16 @@ public class BoidManager : MonoBehaviour
     public float Speed { get; set; }
     public float TurnSpeed { get; set; }
 
+    public float ViewAngle { get; set; }
+    public int RaysPerLayer { get; set; }
+    public int NumberOfLayers { get; set; }
+
+    /*
+     * Best default values below
     float ViewAngle = 120f; // Angle of the view cone in degrees
     int RaysPerLayer = 5; // Number of rays per layer in the cone
     int Layers = 3; // Number of layers in the cone
-
+    */
     public void SimulateMovement(List<BoidManager> other, float time)
     {
 
@@ -150,11 +156,15 @@ public class BoidManager : MonoBehaviour
         avoidanceDirection = Vector3.zero;
         bool obstacleDetected = false;
 
+        // Calculate the step sizes for the cone layers and rays
         float halfConeAngle = ViewAngle / 2f;
-        float layerAngleStep = ViewAngle / (Layers - 1);
+        float layerAngleStep = ViewAngle / (NumberOfLayers - 1);
         float rayAngleStep = 360f / RaysPerLayer;
 
-        for (int layer = 0; layer < Layers; layer++)
+        Vector3 closestHitDirection = Vector3.zero;
+        float closestHitDistance = ObstacleAvoidanceRadius;
+
+        for (int layer = 0; layer < NumberOfLayers; layer++)
         {
             float pitchAngle = -halfConeAngle + layer * layerAngleStep;
             for (int ray = 0; ray < RaysPerLayer; ray++)
@@ -169,23 +179,36 @@ public class BoidManager : MonoBehaviour
                 if (Physics.Raycast(position, rayDirection, out RaycastHit hitInfo, ObstacleAvoidanceRadius, LayerMask.GetMask("BoidObstacle")))
                 {
                     obstacleDetected = true;
-                    avoidanceDirection += (position - hitInfo.point);
-                    Debug.DrawRay(position, rayDirection * ObstacleAvoidanceRadius, Color.red);
-                } else
+
+                    // Calculate the avoidance direction based on hit normal
+                    avoidanceDirection += hitInfo.normal;
+
+                    // Check if this hit is closer than previous hits
+                    float hitDistance = Vector3.Distance(position, hitInfo.point);
+                    if (hitDistance < closestHitDistance)
+                    {
+                        closestHitDistance = hitDistance;
+                        closestHitDirection = hitInfo.normal;
+                    }
+
+                    Debug.DrawRay(position, rayDirection * hitDistance, Color.red);
+                }
+                else
                 {
                     Debug.DrawRay(position, rayDirection * ObstacleAvoidanceRadius, Color.green);
                 }
-
             }
         }
 
         if (obstacleDetected)
         {
-            avoidanceDirection = avoidanceDirection.normalized; // Steer away from the obstacles
+            // Prioritize the direction based on the closest obstacle
+            avoidanceDirection = closestHitDirection.normalized;
         }
 
         return obstacleDetected;
     }
+
 
 
 }
