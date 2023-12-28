@@ -10,7 +10,7 @@ public class Spawner : MonoBehaviour
     private List<BoidManager> _boids;
 
     [SerializeField]
-    float NoClumpingRadius, LocalAreaRadius, Speed, TurnSpeed;
+    float NoClumpingRadius, LocalAreaRadius, Speed, TurnSpeed, ObstacleAvoidanceRadius;
 
     [SerializeField]
     float boidSimulationAreaX = 14f;
@@ -83,6 +83,7 @@ public class Spawner : MonoBehaviour
         boidManager.TurnSpeed = TurnSpeed;
         boidManager.LocalAreaRadius = LocalAreaRadius;
         boidManager.NoClumpingRadius = NoClumpingRadius;
+        boidManager.ObstacleAvoidanceRadius = ObstacleAvoidanceRadius;
         _boids.Add(boidManager);
     }
 }

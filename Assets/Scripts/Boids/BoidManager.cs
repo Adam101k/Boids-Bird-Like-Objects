@@ -9,8 +9,13 @@ public class BoidManager : MonoBehaviour
     public int SwarmIndex { get; set; }
     public float NoClumpingRadius { get; set; } // NoClumpingRadius controls the density of our swarms, the smaller the value, the more dense the swam can be
     public float LocalAreaRadius { get; set; } // LocalAreaRadius controls the average swarm size, A bigger LocalAreaRadius will increase the average swarm size, because each Boid has a bigger range of influence
+    public float ObstacleAvoidanceRadius { get; set; }
     public float Speed { get; set; }
     public float TurnSpeed { get; set; }
+
+    float ViewAngle = 120f; // Angle of the view cone in degrees
+    int RaysPerLayer = 5; // Number of rays per layer in the cone
+    int Layers = 3; // Number of layers in the cone
 
     public void SimulateMovement(List<BoidManager> other, float time)
     {
@@ -118,9 +123,18 @@ public class BoidManager : MonoBehaviour
 
         // Because this is the most important rule, so we apply this in the end so it takes priority above all else and doesn't get overwritten
         // We'll be using raycasts for this based on "Dawn Studio's" implementation, but this may change if I find a more optimal approach
-        RaycastHit hitInfo;
+        /*RaycastHit hitInfo;
         if (Physics.Raycast(transform.position, transform.forward, out hitInfo, LocalAreaRadius, LayerMask.GetMask("BoidObstacle")))
             steering = ((hitInfo.point + hitInfo.normal) - transform.position).normalized;
+        */
+
+        // Commenting out the previous code, as i'll now be attempting to use my own custom raycasting method
+        Vector3 avoidanceDirection;
+        if (PerformConeRaycastObstacleDetection(transform.position, transform.forward, out avoidanceDirection))
+        {
+            steering = avoidanceDirection.normalized;
+        }
+
 
         // applying steering
         if (steering != Vector3.zero)
@@ -130,4 +144,48 @@ public class BoidManager : MonoBehaviour
 
         transform.position += transform.TransformDirection(new Vector3(0, 0, Speed)) * time;
     }
+
+    private bool PerformConeRaycastObstacleDetection(Vector3 position, Vector3 forward, out Vector3 avoidanceDirection)
+    {
+        avoidanceDirection = Vector3.zero;
+        bool obstacleDetected = false;
+
+        float halfConeAngle = ViewAngle / 2f;
+        float layerAngleStep = ViewAngle / (Layers - 1);
+        float rayAngleStep = 360f / RaysPerLayer;
+
+        for (int layer = 0; layer < Layers; layer++)
+        {
+            float pitchAngle = -halfConeAngle + layer * layerAngleStep;
+            for (int ray = 0; ray < RaysPerLayer; ray++)
+            {
+                float yawAngle = ray * rayAngleStep;
+                Quaternion rotation = Quaternion.Euler(pitchAngle, yawAngle, 0);
+                Vector3 direction = rotation * forward;
+
+                // Ensure raycasting is relative to boid's orientation
+                Vector3 rayDirection = transform.TransformDirection(direction);
+
+                if (Physics.Raycast(position, rayDirection, out RaycastHit hitInfo, ObstacleAvoidanceRadius, LayerMask.GetMask("BoidObstacle")))
+                {
+                    obstacleDetected = true;
+                    avoidanceDirection += (position - hitInfo.point);
+                    Debug.DrawRay(position, rayDirection * ObstacleAvoidanceRadius, Color.red);
+                } else
+                {
+                    Debug.DrawRay(position, rayDirection * ObstacleAvoidanceRadius, Color.green);
+                }
+
+            }
+        }
+
+        if (obstacleDetected)
+        {
+            avoidanceDirection = avoidanceDirection.normalized; // Steer away from the obstacles
+        }
+
+        return obstacleDetected;
+    }
+
+
 }
