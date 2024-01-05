@@ -41,6 +41,11 @@ An Early clip of a hundred Boids moving with no Obstacles obscuring their path
  <a> <img src="Images/BoidExample.gif" width="750"></a>
 </div>
 
+Finalized working Boids
+<div align="center">
+ <a> <img src ="Images/FinalBoids.gif" width="480">/</a>
+</div>
+
 
 # Additional Resources
  If you wish to learn more info about what a "Boid" is, I recommend checking out the following resources: </br>
