@@ -191,11 +191,12 @@ public class BoidManager : MonoBehaviour
                         closestHitDirection = hitInfo.normal;
                     }
 
-                    Debug.DrawRay(position, rayDirection * hitDistance, Color.red);
+                    // Both of these drawrays are for debugging and visualizing what the obstacles avoidance is shooting out
+                    //Debug.DrawRay(position, rayDirection * hitDistance, Color.red);
                 }
                 else
                 {
-                    Debug.DrawRay(position, rayDirection * ObstacleAvoidanceRadius, Color.green);
+                    //Debug.DrawRay(position, rayDirection * ObstacleAvoidanceRadius, Color.green);
                 }
             }
         }

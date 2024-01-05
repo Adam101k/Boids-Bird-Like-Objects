@@ -1,0 +1,22 @@
+#pragma kernel CSMain
+
+struct BoidData
+{
+    float3 position;
+    float3 steering;
+    float3 separationDirection;
+    float3 alignmentDirection;
+    float3 cohesionDirection;
+};
+
+RWStructuredBuffer<BoidData> Boids;
+
+// Template for making a compute, but didn't really do anything with it...
+// Feel free to work on this yourself if you're interested in finishing what I started!
+[numthreads(1, 1, 1)]
+void CSMain(uint3 id : SV_DispatchThreadID)
+{
+    BoidData boid = Boids[id.x];
+    // Perform calculations...
+    Boids[id.x] = boid;
+}
